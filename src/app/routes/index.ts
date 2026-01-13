@@ -11,10 +11,8 @@ import { MessageRoutes } from '../modules/message/message.route';
 import { NotificationRoutes } from '../modules/notification/notification.routes';
 import { PackageRoutes } from '../modules/package/package.routes';
 import { ReviewRoutes } from '../modules/review/review.routes';
-import { ServiceRoutes } from '../modules/service/service.routes';
 import { SubCategoryRoutes } from '../modules/subCategory/subCategory.route';
 import { PortfolioRoutes } from '../modules/portfolio/portfolio.route';
-import { PROVIDERRoutes } from '../modules/PROVIDER/PROVIDER.routes';
 import { ReservationRoutes } from '../modules/reservation/reservation.routes';
 import { ReportRoutes } from '../modules/report/report.routes';
 import { PaymentRoutes } from '../modules/payment/payment.routes';
@@ -35,9 +33,7 @@ const apiRoutes = [
     { path: "/notification", route: NotificationRoutes },
     { path: "/package", route: PackageRoutes },
     { path: "/review", route: ReviewRoutes },
-    { path: "/service", route: ServiceRoutes },
     { path: "/portfolio", route: PortfolioRoutes },
-    { path: "/PROVIDER", route: PROVIDERRoutes },
     { path: "/reservation", route: ReservationRoutes },
     { path: "/report", route: ReportRoutes },
     { path: "/payment", route: PaymentRoutes },
