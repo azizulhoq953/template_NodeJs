@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Types } from "mongoose";
 import ApiError from "../../../errors/ApiError";
-import { Service } from "../service/service.model";
+// import { Service } from "../service/service.model";
 import { Offer } from "./offer.model";
 import { Day } from "../../../enums/day";
 import { timeInRange, to24Hour } from "../../../helpers/find.offer";
@@ -42,7 +42,7 @@ const WEEKDAYS: Day[] = [
     isActive: !!isActive
   });
 
-  await Service.findByIdAndUpdate(serviceId, { $set: { isOffered: true } });
+  // await Service.findByIdAndUpdate(serviceId, { $set: { isOffered: true } });
 
   return offer;
 };

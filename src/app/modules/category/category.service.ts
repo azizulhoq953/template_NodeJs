@@ -7,7 +7,7 @@ import { Bookmark } from '../bookmark/bookmark.model'
 import mongoose from 'mongoose'
 import { JwtPayload } from 'jsonwebtoken'
 import { SubCategory } from '../subCategory/subCategory.model'
-import { Service } from '../service/service.model'
+// import { Service } from '../service/service.model'
 import { logger } from '../../../shared/logger'
 import { PaginatedResult, PaginationOptions } from '../../../helpers/pagination.interface'
 
@@ -146,10 +146,10 @@ const getCategoryForPROVIDERFromDB = async (user: JwtPayload): Promise<ICategory
     const subCategories = await SubCategory.find({ category: category._id }).select("title").lean();
 
     const finalResult = await Promise.all(subCategories?.map(async (subCategory: any) => {
-      const service = await Service.findOne({ title: subCategory?._id, category: category._id, PROVIDER: user.id });
+      // const service = await Service.findOne({ title: subCategory?._id, category: category._id, PROVIDER: user.id });
       return {
         ...subCategory,
-        isServiceAdded: !!service
+        isServiceAdded: false //service ? true : false
       }
     }));
 

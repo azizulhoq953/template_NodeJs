@@ -6,8 +6,6 @@ import { JwtPayload } from "jsonwebtoken";
 import mongoose from "mongoose";
 import getDistanceFromCoordinates from "../../../shared/getDistanceFromCoordinates";
 import { Review } from "../review/review.model";
-import getPROVIDERCategory from "../../../shared/getCategoryForPROVIDER";
-import getRatingForPROVIDER from "../../../shared/getRatingForPROVIDER";
 
 const toggleBookmark = async (payload: { customer: string, PROVIDER: string }): Promise<string> => {
 
@@ -54,13 +52,13 @@ const getBookmark = async (user: JwtPayload, query: Record<string, any>): Promis
 
     const PROVIDERsWithDistance = await Promise.all(PROVIDERs.map(async (PROVIDER: any) => {
         const distance = await getDistanceFromCoordinates(PROVIDER?.PROVIDER?.location?.coordinates, JSON?.parse(coordinates));
-        const rating = await getRatingForPROVIDER(PROVIDER?.PROVIDER?._id);
-        const service = await getPROVIDERCategory(PROVIDER?.PROVIDER?._id);
+        // const rating = await getRatingForPROVIDER(PROVIDER?.PROVIDER?._id);
+        // const service = await getPROVIDERCategory(PROVIDER?.PROVIDER?._id);
 
         return {
             ...PROVIDER,
-            services: service || [],
-            rating: rating,
+            // services: service || [],
+            // rating: rating,
             distance: distance ? distance : {},
             isBookmarked: true
         };
@@ -69,4 +67,8 @@ const getBookmark = async (user: JwtPayload, query: Record<string, any>): Promis
     return PROVIDERsWithDistance;
 }
 
-export const BookmarkService = { toggleBookmark, getBookmark }
+export const BookmarkService = {
+     toggleBookmark,
+     getBookmark 
+    
+    }

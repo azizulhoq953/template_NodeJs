@@ -7,7 +7,7 @@ import { Report } from "../report/report.model";
 import mongoose from "mongoose";
 import { sendNotifications } from "../../../helpers/notificationsHelper";
 import getDistanceFromCoordinates from "../../../shared/getDistanceFromCoordinates";
-import getRatingForPROVIDER from "../../../shared/getRatingForPROVIDER";
+// import getRatingForPROVIDER from "../../../shared/getRatingForPROVIDER";
 import { Review } from "../review/review.model";
 import { User } from "../user/user.model";
 
@@ -161,11 +161,11 @@ const customerReservationFromDB = async (user: JwtPayload, query: Record<string,
 
         const reservationsWithDistance = await Promise.all(reservations.map(async (reservation: any) => {
             const distance = await getDistanceFromCoordinates(reservation?.PROVIDER?.location?.coordinates, JSON?.parse(coordinates));
-            const rating = await getRatingForPROVIDER(reservation?.PROVIDER?._id);
+            // const rating = await getRatingForPROVIDER(reservation?.PROVIDER?._id);
             const review = await Review.findOne({ service : reservation?.service?._id, customer: user.id }).select("rating").lean();
             return {
                 ...reservation,
-                rating: rating,
+                // rating: rating,
                 review: review || {},
                 distance: distance ? distance : {}
             };

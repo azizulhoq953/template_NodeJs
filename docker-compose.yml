@@ -1,11 +1,9 @@
-version: '3.9'
-
 services:
   redis:
     image: redis:6-alpine
-    container_name: own-temp-redis
+    container_name: own1-temp-redis
     ports:
-      - "6378:6378"
+      - "6388:6388"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -16,10 +14,10 @@ services:
       timeout: 3s
       retries: 3
     networks:
-      - own-network
+      - own1-network
 
 networks:
-  own-network:
+  own1-network:
     driver: bridge
 
 volumes:

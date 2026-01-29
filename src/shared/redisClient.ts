@@ -1,32 +1,32 @@
 import { createClient } from 'redis';
 
-const redisUrl = process.env.REDIS_URL ?? 'redis://redis:6379';
+const redisUrl = process.env.REDIS_URL ?? 'redis://10.10.7.72:6399'; //always use ipv4 not localhost
 
 export const redis = createClient({
-    url: redisUrl,
-    socket: {
-        family: 4,
-        reconnectStrategy: (retries: number) => Math.min(retries * 200, 2000),
-    },
+  url: redisUrl,
+  socket: {
+    family: 4,
+    reconnectStrategy: retries => Math.min(retries * 50, 500), 
+  },
 });
 
-redis.on('connect', () => console.log('[Redis] connecting...', redisUrl));
-redis.on('ready', () => console.log('[Redis] ready'));
-redis.on('end', () => console.log('[Redis] connection closed'));
-redis.on('reconnecting', () => console.log('[Redis] reconnecting...'));
-redis.on('error', (err: { message: any; }) => console.error('[Redis] error:', err?.message));
+redis.on('connect', () => console.log(`[Redis] 🔌 Connecting to ${redisUrl}`));
+redis.on('ready', () => console.log('[Redis] Ready & Cached!'));
+redis.on('error', err => console.error('[Redis]  Error:', err.message));
 
 export async function initRedis() {
-    if (!redis.isOpen) {
-        await redis.connect();
+  try {
+    if (redis.isOpen) {
+      console.log('[Redis] Already connected');
+      return;
     }
-    // Optional sanity check
-    try {
-        await redis.ping();
-        console.log('[Redis] PING ok');
-    } catch (e: any) {
-        console.error('[Redis] PING failed:', e?.message);
-    }
+    
+    console.log('[Redis] Initial connect...');
+    await redis.connect();
+    const pong = await redis.ping();
+    console.log('[Redis] PING:', pong);
+  } catch (error: any) {
+    console.error('[Redis] Init failed:', error.message);
+    throw error;  
+  }
 }
-
-
